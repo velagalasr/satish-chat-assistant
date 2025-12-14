@@ -96,9 +96,18 @@ def main():
     # Render sidebar (hidden by default, can be opened manually)
     # render_sidebar(agent_manager, rag_manager, ui_config)
     
-    # Main chat interface - Clean minimal design
-    st.title("💬 Satish's AI Assistant")
-    st.caption("Ask me anything about Satish's experience, skills, and projects")
+    # Main chat interface - Clean minimal design with reduced spacing
+    st.markdown(
+        """
+        <h3 style='margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 5px;'>
+            💬 Satish's AI Assistant
+        </h3>
+        <p style='margin-top: 0; margin-bottom: 10px; padding-top: 0; font-size: 14px; color: #888;'>
+            Ask me anything about Satish's experience, skills, and projects
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
     
     # Hide file uploader and stats for clean interface
     # if ui_config.get('enable_file_upload', True) and rag_manager and rag_manager.enabled:
