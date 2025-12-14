@@ -53,12 +53,12 @@ jobs:
               azure-storage-connection="${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
 
       - name: Deploy to Azure Container Apps
-        uses: azure/container-apps-deploy-action@v1
-        with:
-          containerAppName: ${{ env.CONTAINER_APP_NAME }}
-          resourceGroup: ${{ env.RESOURCE_GROUP }}
-          imageToDeploy: ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          environmentVariables: |
-            OPENAI_API_KEY=secretref:openai-api-key
-            AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection
-            AZURE_STORAGE_CONTAINER=satish-documents
+        run: |
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            --set-env-vars \
+              OPENAI_API_KEY=secretref:openai-api-key \
+              AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection \
+              AZURE_STORAGE_CONTAINER=satish-documents
