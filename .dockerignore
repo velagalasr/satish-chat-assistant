@@ -32,8 +32,10 @@ ENV/
 .env
 .env.local
 
-# Data and outputs
-data/
+# Data and outputs (KEEP data/documents/, EXCLUDE data/chromadb/)
+data/chromadb/
+data/faiss/
+data/evaluation/
 logs/
 
 # Large files
@@ -51,16 +53,28 @@ htmlcov/
 
 # Documentation source
 docs/_build/
+docs/
+
+# Development guides (not needed in container)
+guides/
+debug_tools/
+evaluation/
+AGENTS.md
+AZURE_BLOB_SETUP.md
+AZURE_DEPLOYMENT.md
+CHANGELOG.md
+CONTRIBUTING.md
+DOCUMENT_MANAGEMENT.md
+GETTING_STARTED.md
+QUICK_REFERENCE.md
+QUICKSTART.md
+SETUP.md
+TECH_STACK.md
+USAGE.md
+!README.md
 
 # CI/CD
 .github/
-
-# Development
-*.md
-!README.md
-LICENSE
-CONTRIBUTING.md
-CHANGELOG.md
 
 # Deployment configs (include only what's needed)
 deployment/aws/task-definition.json
@@ -70,6 +84,17 @@ deployment/azure/*.json
 tests/
 pytest.ini
 
+# Windows scripts (Linux container doesn't need .bat files)
+*.bat
+
 # Cache
 .cache/
 *.cache
+
+# Deployment configs (not needed in image)
+deployment/
+docker-compose.yml
+Makefile
+
+# Requirements alternatives
+requirements-flexible.txt

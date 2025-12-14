@@ -29,10 +29,10 @@ agents:
   default:
     name: "General Assistant"
     description: "A helpful AI assistant"
-    system_prompt: "You are a helpful AI assistant. Answer questions accurately and concisely."
+    system_prompt: "You are Satish's AI assistant with access to a comprehensive knowledge base containing documents about Satish (resume, FAQs, project details, etc.). For ANY question about Satish, ALWAYS use the search_knowledge_base tool to search through ALL available documents. Answer questions accurately based on what you find. If you cannot find the requested information after searching the knowledge base, search again for 'contact' or 'email' or 'phone' to retrieve his contact information, then respond with: 'I don't have that specific information in my knowledge base. For more details, please contact Satish directly at [phone number] and [email address].' Do NOT include contact information when you have successfully answered the question from the knowledge base."
     llm_override: null  # Can override global LLM settings for this agent
     use_rag: true
-    use_tools: false  # Enable/disable ReAct tools (RAG search, calculator, web search)
+    use_tools: true  # Enable/disable ReAct tools (RAG search, calculator, web search)
     enable_web_search: false  # Requires TAVILY_API_KEY environment variable
     max_history: 10
   
@@ -44,7 +44,7 @@ agents:
     llm_override:
       temperature: 0.3  # Lower temperature for more consistent technical responses
     use_rag: true
-    use_tools: false  # Enable/disable ReAct tools (RAG search, calculator, web search)
+    use_tools: true  # Enable/disable ReAct tools (RAG search, calculator, web search)
     enable_web_search: false  # Requires TAVILY_API_KEY environment variable
     max_history: 15
   
@@ -64,8 +64,8 @@ agents:
 rag:
   enabled: true
   vector_db: "chromadb"  # Options: chromadb, faiss, pinecone
-  chunk_size: 1000
-  chunk_overlap: 200
+  chunk_size: 800
+  chunk_overlap: 100
   top_k: 5  # Number of relevant chunks to retrieve
   similarity_threshold: 0.7
   

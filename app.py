@@ -77,7 +77,7 @@ def main():
         page_title=ui_config.get('title', 'AI Chatbot'),
         page_icon=ui_config.get('page_icon', '🤖'),
         layout=ui_config.get('layout', 'wide'),
-        initial_sidebar_state='expanded'
+        initial_sidebar_state='collapsed'  # Hide sidebar by default
     )
     
     # Apply custom styling
@@ -93,18 +93,17 @@ def main():
     agent_manager = st.session_state.agent_manager
     rag_manager = st.session_state.rag_manager
     
-    # Render sidebar
-    render_sidebar(agent_manager, rag_manager, ui_config)
+    # Render sidebar (hidden by default, can be opened manually)
+    # render_sidebar(agent_manager, rag_manager, ui_config)
     
-    # Main chat interface
-    st.title(ui_config.get('title', 'AI Chatbot Assistant'))
+    # Main chat interface - Clean minimal design
+    st.title("💬 Satish's AI Assistant")
+    st.caption("Ask me anything about Satish's experience, skills, and projects")
     
-    # File uploader (if enabled)
-    if ui_config.get('enable_file_upload', True) and rag_manager and rag_manager.enabled:
-        render_file_uploader(rag_manager)
-    
-    # Statistics panel
-    render_stats_panel(agent_manager, rag_manager)
+    # Hide file uploader and stats for clean interface
+    # if ui_config.get('enable_file_upload', True) and rag_manager and rag_manager.enabled:
+    #     render_file_uploader(rag_manager)
+    # render_stats_panel(agent_manager, rag_manager)
     
     st.divider()
     
@@ -167,20 +166,20 @@ def main():
         # Rerun to update chat display
         st.rerun()
     
-    # Footer
-    st.divider()
-    col1, col2, col3 = st.columns([2, 1, 1])
-    with col1:
-        current_agent = agent_manager.get_current_agent()
-        st.caption(f"🤖 Active Agent: **{current_agent.name}**")
-    with col2:
-        if rag_manager and rag_manager.enabled:
-            st.caption(f"📚 RAG: **Enabled**")
-        else:
-            st.caption(f"📚 RAG: **Disabled**")
-    with col3:
-        llm_config = config.get_llm_config()
-        st.caption(f"🧠 Model: **{llm_config.get('model', 'N/A')}**")
+    # Hide footer for clean interface
+    # st.divider()
+    # col1, col2, col3 = st.columns([2, 1, 1])
+    # with col1:
+    #     current_agent = agent_manager.get_current_agent()
+    #     st.caption(f"🤖 Active Agent: **{current_agent.name}**")
+    # with col2:
+    #     if rag_manager and rag_manager.enabled:
+    #         st.caption(f"📚 RAG: **Enabled**")
+    #     else:
+    #         st.caption(f"📚 RAG: **Disabled**")
+    # with col3:
+    #     llm_config = config.get_llm_config()
+    #     st.caption(f"🧠 Model: **{llm_config.get('model', 'N/A')}**")
 
 
 if __name__ == "__main__":

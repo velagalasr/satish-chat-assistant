@@ -40,7 +40,7 @@ def create_rag_search_tool(rag_retriever) -> Optional[Tool]:
     def search_knowledge_base(query: str) -> str:
         """Search the knowledge base for relevant information."""
         try:
-            docs = rag_retriever.get_relevant_documents(query)
+            docs = rag_retriever.invoke(query)
             if not docs:
                 return "No relevant information found in the knowledge base."
             

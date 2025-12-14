@@ -43,6 +43,7 @@ ENV/
 # Data
 data/chromadb/
 data/faiss/
+data/documents
 *.db
 *.index
 
@@ -68,6 +69,7 @@ models/
 .pytest_cache/
 .coverage
 htmlcov/
+.deubg_tools/
 
 # Deployment
 deployment/**/terraform.tfstate

@@ -46,8 +46,9 @@ tavily-python
 # boto3
 # sagemaker
 
-# Azure Deployment (optional - comment out if not needed)
-# azure-identity
+# Azure Deployment
+azure-storage-blob
+azure-identity
 # azure-mgmt-containerinstance
 # azure-mgmt-web
 
