@@ -212,3 +212,21 @@ For issues, check:
 ---
 
 **Deployment Status:** ✅ Ready for Azure deployment with auto-initialization
+
+
+Commands to get the string and credentials
+# 1. Storage connection string
+az storage account show-connection-string --name satishdocsstorage --resource-group chatbot-rg
+
+# 2. ACR username
+az acr credential show --name satishchatbotregistry-dxbbhvcag6dph3gw --query username -o tsv
+
+# 3. ACR password
+az acr credential show --name satishchatbotregistry-dxbbhvcag6dph3gw --query passwords[0].value -o tsv
+
+# 4. Create service principal
+az ad sp create-for-rbac \
+  --name "satish-github-deploy" \
+  --role contributor \
+  --scopes /subscriptions/$(az account show --query id -o tsv)/resourceGroups/chatbot-rg \
+  --sdk-auth
