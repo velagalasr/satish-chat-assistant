@@ -4,13 +4,14 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
 
 env:
-  REGISTRY_NAME: satishchatbotregistry-dxbbhvcag6dph3gw
-  IMAGE_NAME: ai-chatbot
-  RESOURCE_GROUP: chatbot-rg
-  CONTAINER_APP_NAME: ai-chatbot-app
+  REGISTRY_NAME: satishchatbotregistry-dxbbhvcag6dph3gw  # Update if using different ACR
+  IMAGE_NAME: satish-ai-assistant
+  RESOURCE_GROUP: chatbot-rg  # Update to your resource group
+  CONTAINER_APP_NAME: satish-ai-assistant
 
 jobs:
   build-and-deploy:
@@ -31,7 +32,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./deployment/azure/Dockerfile
+          file: ./Dockerfile
           push: true
           tags: |
             ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:latest
@@ -42,12 +43,14 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Add OpenAI API Key secret
+      - name: Add secrets to Container App
         run: |
           az containerapp secret set \
-            --name ai-chatbot-app \
-            --resource-group chatbot-rg \
-            --secrets openai-api-key=${{ secrets.OPENAI_API_KEY }}
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --secrets \
+              openai-api-key=${{ secrets.OPENAI_API_KEY }} \
+              azure-storage-connection="${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}"
 
       - name: Deploy to Azure Container Apps
         uses: azure/container-apps-deploy-action@v1
@@ -57,4 +60,5 @@ jobs:
           imageToDeploy: ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
           environmentVariables: |
             OPENAI_API_KEY=secretref:openai-api-key
-            ADMIN_CODE=secretref:admin-code
+            AZURE_STORAGE_CONNECTION_STRING=secretref:azure-storage-connection
+            AZURE_STORAGE_CONTAINER=satish-documents
