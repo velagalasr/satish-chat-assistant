@@ -23,8 +23,8 @@ class ConfigLoader:
         self.config: Dict[str, Any] = {}
         self.agents_config: Dict[str, Any] = {}
         
-        # Load environment variables
-        load_dotenv()
+        # Load environment variables from .env file (don't override existing env vars)
+        load_dotenv(override=False)
         
         # Load configurations
         self._load_main_config()
@@ -141,7 +141,7 @@ class ConfigLoader:
         api_key = os.getenv(key_env_name)
         if not api_key:
             raise ValueError(
-                f"API key not found. Please set {key_env_name} in your .env file"
+                f"API key not found. Please set {key_env_name} environment variable"
             )
         return api_key
 
