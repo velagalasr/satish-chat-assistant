@@ -33,10 +33,15 @@ ENV/
 .env.local
 
 # Data and outputs
-data/chromadb/
-data/faiss/
-data/evaluation/results/
-logs/*.log
+data/
+logs/
+
+# Large files
+*.db
+*.bin
+*.tar
+*.zip
+*.pkl
 
 # Test files
 .pytest_cache/
